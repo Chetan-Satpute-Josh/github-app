@@ -1,8 +1,9 @@
 import { StaticParamList } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { RootStackScreenName } from "../constants/ScreenNames";
-import LoginScreen from "#screens/LoginScreen";
-import HomeScreen from "#screens/HomeScreen";
+import { RootStackScreenName } from "#constants/ScreenNames";
+import LoginScreen from "#screens/login/LoginScreen";
+import HomeScreen from "#screens/home/HomeScreen";
+import { useIsSignedIn, useIsSignedOut } from "#hooks/authentication";
 
 const RootStackNavigator = createNativeStackNavigator({
   screenOptions: {
@@ -10,9 +11,11 @@ const RootStackNavigator = createNativeStackNavigator({
   },
   screens: {
     [RootStackScreenName.Login]: {
+      if: useIsSignedOut,
       screen: LoginScreen,
     },
     [RootStackScreenName.Home]: {
+      if: useIsSignedIn,
       screen: HomeScreen,
     },
   },
